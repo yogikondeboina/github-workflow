@@ -1,5 +1,5 @@
 name: Repository events
-0n: [push, pull requiest, issues]
+0n: [main, push, pull requiest, issues]
 
 jobs: 
   checkout-test: 
