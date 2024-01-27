@@ -1,4 +1,4 @@
-name: using reuseble workflow 
+name: using reuseble 
 on: 
   workflow_dispatch: 
     inputs:
@@ -13,3 +13,5 @@ jobs:
     uses: ./.github/workflows/reusebleworkflow.yml
     with: 
       name: ${{ inputs.name }}
+  
+
