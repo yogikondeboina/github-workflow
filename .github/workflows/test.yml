@@ -7,8 +7,11 @@ on:
         type: string
         required: true
         default: "Default value"
+      environment: 
+        description: run main
+        type: environment
+        required: true
     
-
 jobs: 
   checkout-test: 
     runs-on: ubuntu-latest
