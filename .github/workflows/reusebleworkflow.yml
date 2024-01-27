@@ -2,11 +2,11 @@ name: Repository events
 on: 
  workflow_call:
    inputs:
-   name: 
-     description: 'input description'
-     type: 'string'
-     default: 'yogi'
-     required: true
+     name: 
+      description: 'input description'
+      type: 'string'
+      default: 'yogi'
+      required: true
 
 jobs: 
   checkout: 
