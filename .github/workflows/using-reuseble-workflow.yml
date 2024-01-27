@@ -10,7 +10,6 @@ on:
 
 jobs: 
   calling-a-reuseble-wf: 
-    uses: ./.github/reusebleworkflow.yml
+    uses: ./actions/reusebleworkflow.yml
     with: 
       name: ${{ inputs.name }}
-      
