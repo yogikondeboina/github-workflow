@@ -1,0 +1,28 @@
+name: Repository events
+on: 
+ workflow_call:
+   inputs:
+   name: 
+     description: 'input description'
+     type: 'string'
+     default: 'yogi'
+     required: true
+
+jobs: 
+  checkout: 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - run: |
+          ls -a
+
+  build: 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - run: |
+          pwd
+          ll
+          
+
+  

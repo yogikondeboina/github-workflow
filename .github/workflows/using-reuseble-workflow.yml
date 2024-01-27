@@ -1,0 +1,16 @@
+name: using reuseble workflow 
+on: 
+  workflow_dispatch: 
+   inputs:
+   name: 
+     description: 'input description'
+     type: 'string'
+     default: 'yogi'
+     required: true
+
+jobs: 
+  calling-a-reuseble-wf: 
+    uses: ./.github/reusebleworkflow.yml
+    with: 
+      name: ${{ inputs.name }}
+      
