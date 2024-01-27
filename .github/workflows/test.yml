@@ -7,10 +7,14 @@ on:
         type: string
         required: true
         default: "Default value"
+
       environment: 
         description: run main
         type: environment
         required: true
+concurrency: 
+  group: concurrency-1
+  cancel-in-progress: true
     
 jobs: 
   checkout-test: 
