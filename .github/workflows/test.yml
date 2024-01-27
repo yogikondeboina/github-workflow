@@ -1,5 +1,7 @@
 name: Repository events
-on: [push, pull_request, issues]
+on: 
+  workflow_dispatch:
+    
 
 jobs: 
   checkout-test: 
