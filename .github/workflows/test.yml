@@ -1,6 +1,12 @@
 name: Repository events
 on: 
   workflow_dispatch:
+    inputs:
+      string: 
+        description: A string input
+        type: string
+        required: true
+        default: "Default value"
     
 
 jobs: 
