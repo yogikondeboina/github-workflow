@@ -16,7 +16,8 @@ jobs:
       - run: 
           echo $GITHUB_SHA
           echo $GITHUB_REF
-          echo ${{ inputs.string }}
+      - run: |
+          echo "string: ${{ inputs.string }}"
 
       - uses: actions/checkout@v3
   
