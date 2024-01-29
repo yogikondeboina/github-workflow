@@ -1,36 +1,52 @@
-name: Repository events
-
-on: 
-  workflow_dispatch:
-  push: 
+name: Repository eve
+on:
+  push:
     branches:
-      - main
-      - qa 
       - dev
-    
-jobs: 
-  checkout-test: 
+      - qa
+      - prod
+
+jobs:
+  deploy_dev:
     runs-on: ubuntu-latest
-    steps: 
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Dev Environment
+        run: ./deploy.sh dev 
       - run: 
           echo $GITHUB_SHA
           echo $GITHUB_REF
-      - run: |
-          echo "string: ${{ inputs.string }}"
-          ls
 
-      - uses: actions/checkout@v3
-  Deploy: 
-    if: 
-        contains('refs/heads/dev refs/heads/qa refs/heads/main, githhub.ref')
+  deploy_qa:
     runs-on: ubuntu-latest
-    name: deploy
-    strategy:
-      matrix: 
-        environment: [dev, qa, main]
-        exclude: 
-          - environment: ${{ github.ref == 'refs/heads/dev' || 'dev' }}
-          - environment: ${{ github.ref == 'refs/heads/qa' || 'qa' }}
-          - environment: ${{ github.ref == 'refs/heads/main' || 'prod' }}
-    environment: ${{ matrix.environment }}
-  
+    if: github.event_name == 'push' && github.ref == 'refs/heads/qa'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to QA Environment
+        run: ./deploy.sh qa
+      - run: 
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+
+  deploy_prod:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/prod'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Prod Environment
+        run: ./deploy.sh prod
+      - run: 
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+
+    
