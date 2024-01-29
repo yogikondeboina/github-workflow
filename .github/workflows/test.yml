@@ -1,0 +1,28 @@
+name: Repository events
+on: 
+  workflow_dispatch:
+    inputs:
+      string: 
+        description: A string input
+        type: string
+        required: true
+        default: "Default value"
+
+      environment: 
+        description: run main
+        type: environment
+        required: true
+    
+jobs: 
+  checkout-test: 
+    runs-on: ubuntu-latest
+    steps: 
+      - run: 
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+      - run: |
+          echo "string: ${{ inputs.string }}"
+          ls
+
+      - uses: actions/checkout@v3
+  
