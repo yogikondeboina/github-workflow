@@ -1,24 +1,52 @@
-name: Repository events
-on: 
-  workflow_dispatch:
-    inputs:
-      string: 
-        description: A string input
-        type: string
-        required: true
-        default: "Default value"
-    
+name: Repository eve
+on:
+  push:
+    branches:
+      - dev
+      - qa
+      - prod
 
-jobs: 
-  checkout-test: 
+jobs:
+  deploy_dev:
     runs-on: ubuntu-latest
-    steps: 
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Dev Environment
+        run: ./deploy.sh dev 
       - run: 
           echo $GITHUB_SHA
           echo $GITHUB_REF
-      - run: |
-          echo "string: ${{ inputs.string }}"
-          ls
 
-      - uses: actions/checkout@v3
-  
+  deploy_qa:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/qa'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to QA Environment
+        run: ./deploy.sh qa
+      - run: 
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+
+  deploy_prod:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/prod'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Prod Environment
+        run: ./deploy.sh prod
+      - run: 
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+
+    
