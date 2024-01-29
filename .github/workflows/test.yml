@@ -9,7 +9,7 @@ on:
 jobs:
   deploy_dev:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/dev'
 
     steps:
       - name: Checkout repository
@@ -23,7 +23,7 @@ jobs:
 
   deploy_qa:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/qa'
+    if: github.ref == 'refs/heads/qa'
 
     steps:
       - name: Checkout repository
