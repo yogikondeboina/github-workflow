@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Environment Variables
+        id: env
+        run: |
+          if [ ${{ github.ref }} = 'refs/heads/dev' ]; then
+            echo "::set-env name=ENVIRONMENT::dev"
+          elif [ ${{ github.ref }} = 'refs/heads/qa' ]; then
+            echo "::set-env name=ENVIRONMENT::qa"
+          elif [ ${{ github.ref }} = 'refs/heads/prod' ]; then
+            echo "::set-env name=ENVIRONMENT::prod"
+          else
+            echo "::error::Unsupported branch for deployment"
+            exit 1
+          fi
+
+      - name: Deploy to ${{ steps.env.outputs.ENVIRONMENT }}
+        run: |
+          echo "Deploying to ${{ steps.env.outputs.ENVIRONMENT }} environment..."
+          # Add your deployment script/commands here
