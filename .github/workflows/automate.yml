@@ -9,6 +9,10 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, qa, prod]
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -16,18 +20,18 @@ jobs:
       - name: Set Environment Variables
         id: env
         run: |
-          if [ ${{ github.ref }} = 'refs/heads/dev' ]; then
+          if [ "${{ matrix.environment }}" = 'dev' ]; then
             echo "ENVIRONMENT=dev" >> $GITHUB_ENV
-          elif [ ${{ github.ref }} = 'refs/heads/qa' ]; then
+          elif [ "${{ matrix.environment }}" = 'qa' ]; then
             echo "ENVIRONMENT=qa" >> $GITHUB_ENV
-          elif [ ${{ github.ref }} = 'refs/heads/prod' ]; then
+          elif [ "${{ matrix.environment }}" = 'prod' ]; then
             echo "ENVIRONMENT=prod" >> $GITHUB_ENV
           else
-            echo "::error::Unsupported branch for deployment"
+            echo "::error::Unsupported environment for deployment"
             exit 1
           fi
 
-      - name: Deploy to ${{ steps.env.outputs.ENVIRONMENT }}
+      - name: Deploy to ${{ matrix.environment }}
         run: |
-          echo "Deploying to ${{ steps.env.outputs.ENVIRONMENT }} environment..."
+          echo "Deploying to ${{ matrix.environment }} environment..."
           # Add your deployment script/commands here

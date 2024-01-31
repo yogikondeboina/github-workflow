@@ -1,61 +1,61 @@
-name: Environment-based CI/CD
+# name: Environment-based CI/CD
 
-on:
-  push:
-    branches:
-      - qa
+# on:
+#   push:
+#     branches:
+#       - qa
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 14
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v3
+#       with:
+#         node-version: 14
 
-    - name: Install dependencies
-      run: npm install
+#     - name: Install dependencies
+#       run: npm install
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/prod'
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/prod'
 
-    steps:
-    - name: Deploy to production
-      run: |
-        ./deploy.sh
-      env:
-        SECRET_KEY: ${{ secrets.PROD_SECRET }}
-        ENVIRONMENT: prod
+#     steps:
+#     - name: Deploy to production
+#       run: |
+#         ./deploy.sh
+#       env:
+#         SECRET_KEY: ${{ secrets.PROD_SECRET }}
+#         ENVIRONMENT: prod
 
-  deploy_qa:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/qa'
+#   deploy_qa:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/qa'
 
-    steps:
-    - name: Deploy to QA
-      run: |
-        ./deploy.sh
-      env:
-        SECRET_KEY: ${{ secrets.QA_SECRET }}
-        ENVIRONMENT: qa
+#     steps:
+#     - name: Deploy to QA
+#       run: |
+#         ./deploy.sh
+#       env:
+#         SECRET_KEY: ${{ secrets.QA_SECRET }}
+#         ENVIRONMENT: qa
 
-  deploy_dev:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+#   deploy_dev:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
 
-    steps:
-    - name: Deploy to Dev
-      run: |
-        ./deploy.sh
-      env:
-        SECRET_KEY: ${{ secrets.DEV_SECRET }}
-        ENVIRONMENT: dev
+#     steps:
+#     - name: Deploy to Dev
+#       run: |
+#         ./deploy.sh
+#       env:
+#         SECRET_KEY: ${{ secrets.DEV_SECRET }}
+#         ENVIRONMENT: dev
