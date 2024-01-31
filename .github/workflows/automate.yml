@@ -17,16 +17,15 @@ jobs:
         id: env
         run: |
           if [ ${{ github.ref }} = 'refs/heads/dev' ]; then
-            echo "::set-env name=ENVIRONMENT::dev"
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
           elif [ ${{ github.ref }} = 'refs/heads/qa' ]; then
-            echo "::set-env name=ENVIRONMENT::qa"
+            echo "ENVIRONMENT=qa" >> $GITHUB_ENV
           elif [ ${{ github.ref }} = 'refs/heads/prod' ]; then
-            echo "::set-env name=ENVIRONMENT::prod"
+            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
           else
             echo "::error::Unsupported branch for deployment"
             exit 1
           fi
-
 
       - name: Deploy to ${{ steps.env.outputs.ENVIRONMENT }}
         run: |
