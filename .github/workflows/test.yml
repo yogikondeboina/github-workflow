@@ -3,9 +3,7 @@ name: Environment-based CI/CD
 on:
   push:
     branches:
-      - dev
       - qa
-      - prod
 
 jobs:
   build:

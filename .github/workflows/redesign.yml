@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_dev:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Dev
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+            github.event_name == 'push' && github.ref == 'refs/heads/qa'
+            github.event_name == 'push' && github.ref == 'refs/heads/prod'
+        run: |
+          echo "Deploying to Dev environment..."
+          # Add your deployment script/commands for Dev here
+
+  deploy_qa:
+    name: Deploy to QA
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to QA
+        run: |
+          echo "Deploying to QA environment..."
+          # Add your deployment script/commands for QA here
+
+  deploy_prod:
+    name: Deploy to Prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Prod
+        
+        run: |
+          echo "Deploying to Prod environment..."
+          # Add your deployment script/commands for Prod here
