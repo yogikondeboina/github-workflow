@@ -26,6 +26,7 @@ jobs:
             echo "::error::Unsupported branch for deployment"
             exit 1
           fi
+          
 
       - name: Deploy to ${{ steps.env.outputs.ENVIRONMENT }}
         run: |
