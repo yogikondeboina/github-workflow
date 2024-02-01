@@ -17,7 +17,7 @@ jobs:
 
       - name: Deploy to Dev
         if: |
-          contains(github.ref, 'Inox-Scale') || contains(github.ref, 'Inox-Scale-qualif') || contains(github.ref, 'Inox-Scale-prod')
+          contains('refs/heads/dev, refs/heads/qa  refs/heads/prod', github.ref)
         env:
           ENVIRONMENT: ${{ matrix.environment }}
         strategy:
@@ -25,11 +25,11 @@ jobs:
             environment: [dev, qa, prod]
           exclude:
             - environment: dev
-              if: contains(github.ref, 'Inox-Scale')
+              if: contains(github.ref, 'dev')
             - environment: qa
-              if: contains(github.ref, 'Inox-Scale-qualif')
+              if: contains(github.ref, 'qa')
             - environment: prod
-              if: contains(github.ref, 'Inox-Scale-prod')
+              if: contains(github.ref, 'prod')
 
         run: |
           echo "Deploying to $ENVIRONMENT environment..."
