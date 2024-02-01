@@ -9,8 +9,9 @@ on:
 
 jobs:
   deploy:
-    if: 
-      contains('refs/heads/dev refs/heads/qa refs/heads/prod, github.ref')
+    # if: 
+      # contains('refs/heads/dev refs/heads/qa refs/heads/prod, github.ref')
+
     name: Deploy to ${{ matrix.environment }}
     runs-on: ubuntu-latest
     strategy:
@@ -23,13 +24,13 @@ jobs:
 
       - name: Deploy to ${{ matrix.environment }}
         run: |
-          if [ "${{ matrix.environment }}" == "dev" ]; then
+          if [ "${{ refs/heads/devt }}" == "dev" ]; then
             echo "Deploying to dev environment..."
             # Add deployment steps for dev environment
-          elif [ "${{ matrix.environment }}" == "qa" ]; then
+          elif [ "${{ refs/heads/qa }}" == "qa" ]; then
             echo "Deploying to qa environment..."
             # Add deployment steps for qa environment
-          elif [ "${{ matrix.environment }}" == "prod" ]; then
+          elif [ "${{ refs/heads/prod }}" == "prod" ]; then
             echo "Deploying to prod environment..."
             # Add deployment steps for prod environment
           else
