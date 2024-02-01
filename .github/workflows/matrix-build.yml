@@ -1,36 +1,34 @@
-name: Deploy-app
+name: Deploy appservice
 
 on:
   push:
     branches:
       - dev
       - qa
-      - prod 
+      - prod
 
 jobs:
-  deploy_dev:
-    name: Deploy to Dev
+  webapp-build:
     runs-on: ubuntu-latest
+    name: Build Application
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Deploy to Dev
-        if: |
-          contains('refs/heads/dev, refs/heads/qa  refs/heads/prod', github.ref)
-        env:
-          ENVIRONMENT: ${{ matrix.environment }}
-        strategy:
-          matrix:
-            environment: [dev, qa, prod]
-          exclude:
-            - environment: dev
-              if: contains(github.ref, 'dev')
-            - environment: qa
-              if: contains(github.ref, 'qa')
-            - environment: prod
-              if: contains(github.ref, 'prod')
-
+  webapp-deploy:
+    runs-on: ubuntu-latest
+    needs: webapp-build
+    strategy:
+      matrix:
+        environment: [dev, qa, prod]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy to ${{ matrix.environment }}
+        if: ${{ contains(github.ref, 'dev') && matrix.environment == 'dev' || 
+                 contains(github.ref, 'qa') && matrix.environment == 'qa' || 
+                 contains(github.ref, 'prod') && matrix.environment == 'prod' }}
         run: |
-          echo "Deploying to $ENVIRONMENT environment..."
+          echo "Deploying to ${{ matrix.environment }} environment..."
           # Add deployment steps for each environment
