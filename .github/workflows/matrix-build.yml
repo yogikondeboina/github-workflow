@@ -9,6 +9,8 @@ on:
 
 jobs:
   deploy:
+    if: 
+      contains('refs/heads/dev refs/heads/qa refs/heads/prod, github.ref')
     name: Deploy to ${{ matrix.environment }}
     runs-on: ubuntu-latest
     strategy:
