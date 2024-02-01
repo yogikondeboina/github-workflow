@@ -1,8 +1,6 @@
 name: Deploy matrix test
 
-on:
-  # workflow_dispatch:
-    
+on:    
   push:
     branches:
       - qa
