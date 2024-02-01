@@ -26,9 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Deploy to ${{ matrix.environment }}
-        if: ${{ contains(github.ref, 'dev') && 'refs/heads/dev' == 'dev' || 
-                 contains(github.ref, 'qa') && 'refs/heads/qa' == 'qa' || 
-                 contains(github.ref, 'prod') && 'refs/heads/prod' == 'prod' }}
+        if: ${{ contains(github.ref == refs/heads/dev' || 'dev' || 
+                 contains(github.ref == refs/heads/qa' || 'qa' || 
+                 contains(github.ref == refs/heads/prod' || 'prod' }}
         run: |
           echo "Deploying to ${{ matrix.environment }} environment..."
           # Add deployment steps for each environment
