@@ -1,4 +1,4 @@
-name: Deploy matrix
+name: Deploy matrixmmmm
 
 on:
   push:
@@ -9,12 +9,19 @@ on:
 
 jobs:
   deploy:
-    if: contains('refs/heads/dev refs/heads/qa refs/heads/prod, github.ref')
+    if: contains(github.ref, 'refs/heads/dev') || contains(github.ref, 'refs/heads/qa') || contains(github.ref, 'refs/heads/prod')
     name: Deploy
     runs-on: ubuntu-latest
     strategy:
       matrix:
         environment: [dev, qa, prod]
+        exclude:
+          - environment: dev
+            if: contains(github.ref, 'refs/heads/dev')
+          - environment: qa
+            if: contains(github.ref, 'refs/heads/qa')
+          - environment: prod
+            if: contains(github.ref, 'refs/heads/prod')
 
     steps:
       - name: Checkout Repository
