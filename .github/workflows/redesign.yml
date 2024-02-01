@@ -18,7 +18,7 @@ jobs:
 
   webapp-deploy:
     if: 
-      contains('refs/heads/Inox-Scale refs/heads/Inox-Scale-qualif refs/heads/Inox-prod, github.ref')
+      contains('refs/heads/dev refs/heads/qa refs/heads/prod, github.ref')
     needs: webapp-build
     runs-on: ubuntu-latest
     strategy: 
