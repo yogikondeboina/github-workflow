@@ -1,0 +1,42 @@
+name: Deploy matrix test
+
+on:    
+  push:
+    branches:
+      - qa
+      - dev
+      - prod
+      
+
+jobs:
+  deploy:
+    if: contains(github.ref, 'refs/heads/dev') || contains(github.ref, 'refs/heads/qa') || contains(github.ref, 'refs/heads/prod')
+    name: Deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, qa, prod]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Environment Variables
+        id: env
+        run: |
+          if [ "${{ matrix.environment }}" = 'dev' ]; then
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+          elif [ "${{ matrix.environment }}" = 'qa' ]; then
+            echo "ENVIRONMENT=qa" >> $GITHUB_ENV
+          elif [ "${{ matrix.environment }}" = 'prod' ]; then
+            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+          else
+            echo "::error::Unsupported environment for deployment"
+            exit 1
+          fi
+
+      - name: Deploy to ${{ matrix.environment }}
+        if: contains(github.ref, 'refs/heads/${{ matrix.environment }}')
+        run: |
+          echo "Deploying to ${{ matrix.environment }} environment..."
+          # Add your deployment script/commands here
