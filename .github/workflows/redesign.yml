@@ -1,11 +1,11 @@
-name: Deploy demo
+name: Deploy demo test
 
 on:
   push:
     branches:
-      - Inox-Scale
-      - Inox-Scale-qualif
-      - Inox-Scale-prod
+      - dev
+      - qa
+      - prod
 
 jobs:
   webapp-build:
@@ -25,9 +25,9 @@ jobs:
       matrix: 
         environment: [dev, qualif, prod]
         exclude: 
-          - environment: ${{ github.ref == 'refs/heads/Inox-Scale' || 'dev' }}
-          - environment: ${{ github.ref == 'refs/heads/Inox-Scale-qualif' || 'qualif' }}
-          - environment: ${{ github.ref == 'refs/heads/Inox-Scale-prod' || 'prod' }}
+          - environment: ${{ github.ref == 'refs/heads/dev' || 'dev' }}
+          - environment: ${{ github.ref == 'refs/heads/qa' || 'qualif' }}
+          - environment: ${{ github.ref == 'refs/heads/prod' || 'prod' }}
           - environment: ${{ github.ref == 'refs/heads/.' || 'dev' }}
     environment: ${ matrix.environment }
     steps:
