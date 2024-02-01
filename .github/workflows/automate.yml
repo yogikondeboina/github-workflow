@@ -3,11 +3,11 @@ name: Deploy matrix test
 on:
   workflow_dispatch:
     
-  push:
-    branches:
-      - qa
-      - dev
-      - prod
+  # push:
+  #   branches:
+  #     - qa
+  #     - dev
+  #     - prod
 
 jobs:
   deploy:
