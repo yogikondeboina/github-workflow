@@ -1,4 +1,4 @@
-name: Deploy appservice
+name: Deploy-app
 
 on:
   push:
@@ -8,27 +8,33 @@ on:
       - prod
 
 jobs:
-  webapp-build:
+  deploy:
+    name: Deploy to ${{ matrix.environment }}
     runs-on: ubuntu-latest
-    name: Build Application
+    strategy:
+      matrix:
+        environment: [dev, qa, prod]
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-  webapp-deploy:
-    runs-on: ubuntu-latest
-    needs: webapp-build
-    strategy:
-      matrix:
-        environment: [dev, qa, prod]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Deploy to ${{ matrix.environment }}
-        if: ${{ contains(github.ref == refs/heads/dev' || 'dev' || 
-                 contains(github.ref == refs/heads/qa' || 'qa' || 
-                 contains(github.ref == refs/heads/prod' || 'prod' }}
         run: |
-          echo "Deploying to ${{ matrix.environment }} environment..."
-          # Add deployment steps for each environment
+          if [ "${{ matrix.environment }}" == "dev" ]; then
+            echo "Deploying to dev environment..."
+            # Add deployment steps for dev environment
+          elif [ "${{ matrix.environment }}" == "qa" ]; then
+            echo "Deploying to qa environment..."
+            # Add deployment steps for qa environment
+          elif [ "${{ matrix.environment }}" == "prod" ]; then
+            echo "Deploying to prod environment..."
+            # Add deployment steps for prod environment
+          else
+            echo "Unsupported environment"
+            exit 1
+          fi
+      - name: folder
+        run: | 
+          ls -a 
+          pwd
