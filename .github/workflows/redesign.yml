@@ -1,47 +1,64 @@
-name: Deploy
+name: Deploy demo
 
 on:
   push:
     branches:
-      - main
+      - Inox-Scale
+      - Inox-Scale-qualif
+      - Inox-Scale-prod
 
 jobs:
-  deploy_dev:
+  webapp-build:
+    runs-on: ubuntu-latest
     name: Deploy to Dev
-    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Deploy to Dev
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
-            github.event_name == 'push' && github.ref == 'refs/heads/qa'
-            github.event_name == 'push' && github.ref == 'refs/heads/prod'
-        run: |
-          echo "Deploying to Dev environment..."
-          # Add your deployment script/commands for Dev here
-
-  deploy_qa:
-    name: Deploy to QA
+  webapp-deploy:
+    if: 
+      contains('refs/heads/Inox-Scale refs/heads/Inox-Scale-qualif refs/heads/Inox-prod, github.ref')
+    needs: webapp-build
     runs-on: ubuntu-latest
+    strategy: 
+      matrix: 
+        environment: [dev, qualif, prod]
+        exclude: 
+          - environment: ${{ github.ref == 'refs/heads/Inox-Scale' || 'dev' }}
+          - environment: ${{ github.ref == 'refs/heads/Inox-Scale-qualif' || 'qualif' }}
+          - environment: ${{ github.ref == 'refs/heads/Inox-Scale-prod' || 'prod' }}
+          - environment: ${{ github.ref == 'refs/heads/.' || 'dev' }}
+    environment: ${ matrix.environment }
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Deploy to QA
-        run: |
-          echo "Deploying to QA environment..."
-          # Add your deployment script/commands for QA here
+  #       run: |
+  #         echo "Deploying to Dev environment..."
+  #         # Add your deployment script/commands for Dev here
 
-  deploy_prod:
-    name: Deploy to Prod
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+  # deploy_qa:
+  #   name: Deploy to QA
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
 
-      - name: Deploy to Prod
+  #     - name: Deploy to QA
+  #       run: |
+  #         echo "Deploying to QA environment..."
+  #         # Add your deployment script/commands for QA here
+
+  # deploy_prod:
+  #   name: Deploy to Prod
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Deploy to Prod
         
-        run: |
-          echo "Deploying to Prod environment..."
-          # Add your deployment script/commands for Prod here
+  #       run: |
+  #         echo "Deploying to Prod environment..."
+  #         # Add your deployment script/commands for Prod here
