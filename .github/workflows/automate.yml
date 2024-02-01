@@ -1,12 +1,15 @@
-name: Deploy
+name: Deploy 
 
 on:
   push:
     branches:
       - qa
+      - dev
+      - prod
 
 jobs:
   deploy:
+    if: contains('refs/heads/dev refs/heads/qa refs/heads/prod, github.ref')
     name: Deploy
     runs-on: ubuntu-latest
     strategy:
