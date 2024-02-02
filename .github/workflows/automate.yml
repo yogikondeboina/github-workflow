@@ -1,4 +1,4 @@
-name: Deploy matrix
+name: Deploy matrix qa"
 
 on:
   push:
