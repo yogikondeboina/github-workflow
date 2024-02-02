@@ -1,4 +1,4 @@
-name: Deploy matrix qa"
+name: Deploy matrix qa =  github.ref
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     strategy:
+
       matrix:
         environment: [dev, qa, prod]
 
@@ -23,11 +24,11 @@ jobs:
       - name: Set Environment Variables
         id: env
         run: |
-          if [ "${{ matrix.environment }}" = 'dev' ]; then
+          if [[ ${{ github.ref }} == 'refs/heads/dev' ]]; then
             echo "ENVIRONMENT=dev" >> $GITHUB_ENV
-          elif [ "${{ matrix.environment }}" = 'qa' ]; then
+          elif [[ ${{ github.ref }} == 'refs/heads/qa' ]]; then
             echo "ENVIRONMENT=qa" >> $GITHUB_ENV
-          elif [ "${{ matrix.environment }}" = 'prod' ]; then
+          elif [[ ${{ github.ref }} == 'refs/heads/prod' ]]; then
             echo "ENVIRONMENT=prod" >> $GITHUB_ENV
           else
             echo "::error::Unsupported environment for deployment"
