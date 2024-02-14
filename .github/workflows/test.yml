@@ -28,4 +28,6 @@ jobs:
           ls
 
       - uses: actions/checkout@v3
+      - name: hello
+        run: echo "hello"
   
