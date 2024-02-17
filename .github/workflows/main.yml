@@ -34,14 +34,15 @@ jobs:
                 github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
     steps: 
       - uses: actions/checkout@v2
-      - name: set default variable
-        run: echo "ENV_CODE=dev" >> $GITHUB_ENV
-      - name: set qa variable 
-        if: ${{ github.ref == 'refs/heads/qa' }}
-        run: echo "ENV_CODE=qa" >> $GITHUB_ENV
-      - name: set prod variable 
-        if: ${{ github.ref == 'refs/heads/prod' }}
-        run: echo "ENV_CODE=prod" >> $GITHUB_ENV
+      - name: set environment variable
+        run: |
+          echo "ENV_CODE=dev" >> $GITHUB_ENV
+          if [ "${{ github.ref }}" = "refs/heads/qa" ]; 
+          then echo "ENV_CODE=qa" >> $GITHUB_ENV; 
+          fi
+          if [ "${{ github.ref }}" = "refs/heads/prod" ];
+           then echo "ENV_CODE=prod" >> $GITHUB_ENV; 
+           fi
 
       - name: print env variable
         run: echo ${{ vars.DUMMY }}
