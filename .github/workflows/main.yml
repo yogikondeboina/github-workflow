@@ -19,7 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: print env
-        run: echo ${{ github.ref == 'refs/heads/dev' && 'dev' || 'qa' }}
+        run: echo ${{ github.ref == 'refs/heads/dev' && 'dev' ||
+                github.ref == 'refs/heads/qa' && 'qa' ||
+                github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
 
       - name: folder stru
         run: | 
