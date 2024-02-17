@@ -1,0 +1,39 @@
+name: automation in based on branches
+on: 
+  workflow_dispatch:
+    inputs:
+      Environment:
+        description: 'Specify the environment'
+        required: false
+        default: 'dev'
+  push: 
+    branches:
+      - dev
+      - qa
+      - prod
+
+jobs:
+  Build: 
+    name: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ github.ref == 'refs/heads/dev' && 'dev' ||
+                github.ref == 'refs/heads/qa' && 'qa' ||
+                github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: print env
+        run: echo ${{ github.ref == 'refs/heads/dev' && 'dev' ||
+                github.ref == 'refs/heads/qa' && 'qa' ||
+                github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
+
+      - name: folder stru
+        run: | 
+             pwd 
+             ls -lrth
+      - name: print env variable
+        run: echo ${{ vars.DUMMY }}
+
+  
