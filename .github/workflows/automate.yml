@@ -1,6 +1,7 @@
 name: Deploy matrix qa =  github.ref
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - qa
