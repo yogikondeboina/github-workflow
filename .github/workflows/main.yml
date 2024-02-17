@@ -43,6 +43,8 @@ jobs:
           if [ "${{ github.ref }}" = "refs/heads/prod" ];
            then echo "ENV_CODE=prod" >> $GITHUB_ENV; 
            fi
+      # - name: set environment variable
+      #   run: echo "ENV_CODE=${{ github.ref == 'refs/heads/qa' && 'qa' || github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}" >> $GITHUB_ENV
 
       - name: print env variable
         run: echo ${{ vars.DUMMY }}
