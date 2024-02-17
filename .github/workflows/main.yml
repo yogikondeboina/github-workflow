@@ -21,7 +21,7 @@ jobs:
 
       - name: folder stru
         run: | 
-           pwd 
-           ls 
+             pwd 
+             ls -lrth
 
   
