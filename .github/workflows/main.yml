@@ -27,6 +27,6 @@ jobs:
              pwd 
              ls -lrth
       - name: print env variable
-        run: echo ${{ env.DUMMY }}
+        run: echo ${{ vars.DUMMY }}
 
   
