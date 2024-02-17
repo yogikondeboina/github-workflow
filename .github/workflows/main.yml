@@ -21,7 +21,9 @@ jobs:
 
       - name: folder stru
         run: | 
-          pwd 
-          ls 
+             pwd 
+             ls -lrth
+      - name: print env variable
+        run: echo ${{ vars.DUMMY }}
 
   
