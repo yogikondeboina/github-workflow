@@ -11,16 +11,14 @@ on:
       - dev
       - qa
       - prod
-      - test
 
-jobs: 
+jobs:
   Build: 
     name: build
     runs-on: ubuntu-latest
 
     environment:
       name: ${{ github.ref == 'refs/heads/dev' && 'dev' ||
-                github.ref == 'refs/heads/test' && 'dev' ||
                 github.ref == 'refs/heads/qa' && 'qa' ||
                 github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
 
