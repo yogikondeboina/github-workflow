@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     environment: 
-      name: ${{ github.ref == 'refs/heads/dev' && 'dev' || github.ref == 'refs/heads/qa' && 'dev' || github.ref == 'refs/heads/prod' && 'dev' }}
+      name: ${{ github.ref == 'refs/heads/dev' && 'dev' || 'dev',
+                github.ref == 'refs/heads/qa' && 'qa' || 'dev',
+                github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
 
     steps:
       - uses: actions/checkout@v2
