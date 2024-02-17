@@ -1,31 +1,19 @@
-name: Repository events
-on: 
+name: workflow_dispatch test remove inputs
+on:
   workflow_dispatch:
-    inputs:
-      string: 
-        description: A string input
-        type: string
-        required: true
-        default: "Default value"
+  push:
+    branches:
+      - dev
 
-      environment: 
-        description: run main
-        type: environment
-        required: true
-concurrency: 
-  group: concurrency-1
-  cancel-in-progress: true
-    
-jobs: 
-  checkout-test: 
+jobs:
+  build:
     runs-on: ubuntu-latest
-    steps: 
-      - run: 
-          echo $GITHUB_SHA
-          echo $GITHUB_REF
-      - run: |
-          echo "string: ${{ inputs.string }}"
-          ls
 
-      - uses: actions/checkout@v3
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - run: 
+        echo $GITHUB_SHA
+        echo $GITHUB_REF
   
