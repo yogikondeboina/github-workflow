@@ -33,7 +33,7 @@ jobs:
                 github.ref == 'refs/heads/qa' && 'qa' ||
                 github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
     steps: 
-      - uses: actions/checkout
+      - uses: actions/checkout@v2
       - name: print env variable
         run: echo ${{ vars.DUMMY }}
 
