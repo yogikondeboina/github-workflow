@@ -1,11 +1,16 @@
 name: automation in based on branches
 on: 
   workflow_dispatch:
-    push: 
-      branches:
-        - dev
-        - qa
-        
+    inputs:
+      Environment:
+        description: 'Specify the environment'
+        required: false
+        default: 'dev'
+  push: 
+    branches:
+      - dev
+      - qa
+
 jobs:
   Build: 
     name: build
