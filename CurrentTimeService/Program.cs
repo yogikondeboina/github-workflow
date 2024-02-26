@@ -11,7 +11,7 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 // GET UTC
-app.MapGet("time/utc", () => Results.Ok("Hello YOGI this new changes"));
+app.MapGet("Hello YOGI this new changes", () => Results.Ok("Hello YOGI this new changes"));
 //Console.WriteLine("Hello, .NET!");
 
 //app.MapGet("/", () => Results.Ok("Hello YOGI this new changes"));
