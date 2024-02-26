@@ -12,10 +12,10 @@ app.UseHttpsRedirection();
 
 // GET UTC
 app.MapGet("time/utc", () => Results.Ok(DateTime.UtcNow));
+Console.WriteLine("Hello, .NET!");
 
 await app.RunAsync();
 
-Console.WriteLine("Hello, .NET!");
 
 
         
